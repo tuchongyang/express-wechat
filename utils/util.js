@@ -1,4 +1,24 @@
 module.exports = {
+    //生成随机数
+    createNovceStr(){
+        return Math.random().toString(36).substr(2,15)
+    },
+    // 生成时间戳
+    createTimeStamp(){
+        return parseInt(new Date().getTime()/1000) + ''
+    },
+    //object 转换成json并排序
+    raw(args){
+        let keys = Object.keys(args).sort();
+        let obj = {};
+        keys.forEach(key=>{
+            obj[key] = args[key]
+        })
+        //将对象转换为&分隔的参数
+        var val = keys.map(key=>key+'='+obj[key]).join('&');
+        return val;
+        
+    },
     // 对请求结果统一封装处理
     handleResponse(err, response, body){
         if(!err && response.statusCode== 200){
