@@ -8,7 +8,13 @@ let createHash = require('create-hash');
 const { json } = require('express');
 
 router.get('/',function(req, res){
-    res.render('index', { title: '微信接口服务' });
+    let {signature,timestamp,nonce,echostr} = req.query
+    let token = 'wechat'
+    let timArr = [token,timestamp,nonce].sort().join('')
+    let tmpStr = createHash('sha1').update(timArr).digest('hex');
+    console.log(tmpStr,tmpStr==signature,echostr)
+    res.send(echostr)
+    // res.render('index', { title: '微信接口服务' });
 })
 
 router.get('/test',function(req, res){
